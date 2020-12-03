@@ -1,0 +1,59 @@
+<configuration scan="true" scanPeriod="30 seconds">
+    <!--    Вывод в файлы    -->
+
+    <appender name="HTTP" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>./log/requestResponse.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>./log/requestResponse_%d{yyyyMMdd}.log</fileNamePattern>
+            <maxHistory>90</maxHistory>
+        </rollingPolicy>
+<!--        <append>true</append>-->
+<!--        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">-->
+<!--            <fileNamePattern>./log/archived/requestResponse_%d{yyyyW}.log.gz</fileNamePattern>-->
+            <!--            <maxHistory>3</maxHistory>-->
+<!--        </rollingPolicy>-->
+        <encoder>
+            <pattern>[%d{dd.MM.yyyy HH:mm:ss.SSS}] %-5level %logger{18} - %msg %n%xEx{20}</pattern>
+        </encoder>
+    </appender>
+    <logger name="Http" level="INFO" additivity="false">
+        <appender-ref ref="HTTP"/>
+    </logger>
+
+
+    <appender name="FILE_ALL_ROLLING" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>./log/App.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>./log/App_%d{yyyyMMdd}.log</fileNamePattern>
+            <maxHistory>90</maxHistory>
+        </rollingPolicy>
+<!--        <append>true</append>-->
+<!--        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">-->
+<!--            <fileNamePattern>./log/archived/App_%d{yyyyW}.log.gz</fileNamePattern>-->
+<!--            <maxHistory>3</maxHistory>-->
+<!--        </rollingPolicy>-->
+        <encoder>
+            <pattern>
+                [%d{dd.MM.yyyy HH:mm:ss.SSS}] %-5level %logger{18} - %msg %n%xEx{20}
+            </pattern>
+        </encoder>
+    </appender>
+
+
+    <!--Вывод в консоль-->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>
+                [%d{dd.MM.yyyy HH:mm:ss.SSS}] %-5level %logger{18} - %msg %n%xEx{20}
+            </pattern> <!--%L выводит номер строки, откуда вызов лога-->
+        </encoder>
+    </appender>
+
+
+    <!--    Активация вывода-->
+    <root level="INFO">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="FILE_ALL_ROLLING"/>
+    </root>
+
+</configuration>
